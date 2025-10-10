@@ -1,0 +1,41 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "C:/ktpm/DOANgd1/ProductCatalog_Phase1:/var/www/html"   # code phase1
+    ports:
+      - "9080:80"
+    depends_on:
+      - db
+    networks: [perfume_p1_net]
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: perfume_phase1
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    ports:
+      - "3308:3306"
+    networks: [perfume_p1_net]
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "9081:80"
+    depends_on:
+      - db
+    networks: [perfume_p1_net]
+    restart: unless-stopped
+
+networks:
+  perfume_p1_net:
