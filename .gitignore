@@ -1,0 +1,24 @@
+# Composer vendor
+webfull/vendor/
+Phase1/vendor/
+Phase2/vendor/
+Phase3/vendor/
+
+# zip files
+*.zip
+
+# env
+.env
+
+# IDE
+.vscode/
+.ipynb_checkpoints/
+
+# docs
+*.docx
+*.xlsx
+*.pptx
+*.pdf
+
+# sql
+*.sql

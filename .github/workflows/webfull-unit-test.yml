@@ -1,0 +1,31 @@
+name: WebFull - Unit Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-webfull:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & start DB + WebFull
+        run: docker compose up -d --build db full-web
+
+      - name: Run PHPUnit (WebFull)
+        run: |
+          docker compose exec -T full-web sh -lc '
+            cd /var/www/html
+            composer install --no-interaction --prefer-dist --no-progress
+            vendor/bin/phpunit
+          '
+
+      - name: Logs on failure
+        if: failure()
+        run: docker compose logs --no-color
+
+      - name: Shutdown
+        if: always()
+        run: docker compose down -v

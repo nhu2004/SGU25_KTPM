@@ -1,0 +1,19 @@
+FROM php:8.2-apache
+
+RUN a2enmod rewrite
+
+# lib để build gd + zip + tool
+RUN apt-get update && apt-get install -y \
+    curl unzip \
+    libpng-dev libjpeg-dev libfreetype6-dev \
+    libzip-dev \
+ && docker-php-ext-configure gd --with-freetype --with-jpeg \
+ && docker-php-ext-install -j$(nproc) gd mysqli zip \
+ && docker-php-ext-enable gd mysqli zip \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sS https://getcomposer.org/installer | php -- \
+  --install-dir=/usr/local/bin --filename=composer
+
+ENV TZ=Asia/Ho_Chi_Minh
+WORKDIR /var/www/html

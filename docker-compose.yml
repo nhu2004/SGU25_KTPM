@@ -1,0 +1,85 @@
+services:
+  # ========== MySQL dùng chung ==========
+  db:
+    image: mysql:8.0
+    container_name: perfume-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-dbperfume}
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    ports:
+      - "3307:3306"            # host:container
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # ========== phpMyAdmin ==========
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: perfume-pma
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "${PHPMYADMIN_PORT:-9081}:80"
+    depends_on:
+      - db
+
+  # ========== PHASE 1 ==========
+  phase1-web:
+    build: .
+    container_name: perfume-phase1-web
+    environment:
+      DOCKERIZED: "1"
+    ports:
+      - "${PHASE1_PORT:-8080}:80"
+    volumes:
+      - ./Phase1:/var/www/html
+    depends_on:
+      - db
+
+  # ========== PHASE 2 (Shopping Cart) ==========
+  phase2-web:
+    build: .
+    container_name: perfume-phase2-web
+    environment:
+      DOCKERIZED: "1"
+    ports:
+      - "${PHASE2_PORT:-8081}:80"
+    volumes:
+      - ./Phase2:/var/www/html
+    depends_on:
+      - db
+
+    # ========== WEB FULL ==========
+  full-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.webfull
+    container_name: perfume-full-web
+    environment:
+      DOCKERIZED: "1"
+    ports:
+      - "${FULL_PORT:-8082}:80"
+    volumes:
+      - ./webfull:/var/www/html
+    depends_on:
+      - db
+
+
+       # ========== PHASE 3 (Payment) ==========
+  phase3-web:
+    build: .
+    container_name: perfume-phase3-web
+    environment:
+      DOCKERIZED: "1"
+    ports:
+      - "${PHASE3_PORT:-8083}:80"
+    volumes:
+      - ./Phase3:/var/www/html
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+
