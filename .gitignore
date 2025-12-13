@@ -6,6 +6,10 @@ Phase3/vendor/
 
 # zip files
 *.zip
+webfull/vendor/
+Phase1/vendor/
+Phase2/vendor/
+Phase3/vendor/
 
 # env
 .env
