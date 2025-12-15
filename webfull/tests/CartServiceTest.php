@@ -58,4 +58,20 @@ final class CartServiceTest extends TestCase
 
         $this->assertSame(250, $svc->total($cart));
     }
+
+    public function testUpdateQtyNegativeRemovesItem(): void
+    {
+        $svc = new CartService();
+
+        $cart = [
+            ['product_id' => 1, 'product_quantity' => 2, 'product_price' => 100],
+        ];
+
+        // qty âm -> code service sẽ clamp về 0 -> coi như xóa sản phẩm
+        [$new, $status] = $svc->updateQty($cart, 1, -5, 10);
+
+        $this->assertSame(1, $status);   // không phải lỗi vượt tồn
+        $this->assertCount(0, $new);     // item bị xóa khỏi giỏ
+    }
+
 }
