@@ -87,3 +87,50 @@ Sơ đồ Use Case Access Control mô tả tổng quan các chức năng liên q
 Về chi tiết, người mua có thể thực hiện các chức năng cơ bản như Đăng ký, Đăng nhập và Đăng xuất để sử dụng hệ thống. Sau khi đăng nhập, người dùng có thể Chỉnh sửa thông tin cá nhân và Đổi mật khẩu thông qua các use case mở rộng (<<extend>>) từ chức năng Đăng nhập. Ở phía Admin, use case trung tâm Quản lý tài khoản bao gồm (<<include>>) các chức năng Xem danh sách tài khoản, Chỉnh sửa thông tin tài khoản, Phân vai trò người dùng và Khóa/Mở khóa tài khoản. Việc phân tách rõ ràng quyền hạn giữa người mua và admin giúp hệ thống đảm bảo tính bảo mật, đồng thời cho phép quản trị viên kiểm soát hiệu quả người dùng và hoạt động truy cập trên toàn bộ hệ thống.
 
 5. User Stories
+
+Product Catalog 
+
+Là một Người mua, tôi muốn truy cập vào trang Danh mục sản phẩm, để tôi có thể xem danh sách các sản phẩm với tên, giá, loại và hình ảnh.
+Là một Người mua, tôi muốn lọc sản phẩm theo tên hoặc khoảng giá, để tôi có thể nhanh chóng tìm được sản phẩm phù hợp với nhu cầu.
+Là một Người mua, tôi muốn nhấp vào một sản phẩm cụ thể, để tôi có thể xem chi tiết sản phẩm bao gồm tên và mô tả chi tiết.
+Là một Quản trị viên, tôi muốn truy cập vào giao diện quản lý sản phẩm, để tôi có thể tạo mới, xem thông tin chi tiết, cập nhật hoặc xóa sản phẩm.
+Bất cứ khi nào tôi thực hiện thao tác quản lý, thì hệ thống sẽ xử lý yêu cầu, cập nhật cơ sở dữ liệu và hiển thị danh mục sản phẩm mới nhất.
+Shopping Cart 
+
+Là một Người mua, tôi có thể nhấn nút “Thêm vào giỏ hàng” hoặc “Mua ngay”, để tôi có thể lưu sản phẩm mình chọn vào giỏ hàng.
+Bất cứ khi nào sản phẩm đã hết hàng, thì hệ thống sẽ hiển thị thông báo “Sản phẩm hiện đã hết hàng, vui lòng chọn sản phẩm khác” và không thêm vào giỏ.
+Là một Người mua, tôi muốn truy cập vào Giỏ hàng, để tôi có thể xem danh sách sản phẩm đã chọn, bao gồm: tên, giá, số lượng, hình ảnh, và trạng thái còn hàng.
+Là một Người mua, tôi muốn thấy bảng tóm tắt giỏ hàng, để tôi có thể biết tổng chi phí sản phẩm, chi phí vận chuyển và tổng số tiền thanh toán.
+Là một Người mua, tôi muốn thay đổi số lượng sản phẩm trong giỏ, để hệ thống tự động tính lại tổng chi phí và tổng tiền thanh toán.
+Là một Người mua, tôi muốn xóa sản phẩm khỏi giỏ.
+Là một Người mua, tôi muốn nhấn nút “Thanh toán” trong giỏ hàng, để tôi có thể bắt đầu quy trình Thanh toán đơn hàng.
+Payment Process
+
+Là một người mua, sau khi tôi chọn được các sản phẩm cần thiết và cho vào giỏ hàng, tôi muốn có thể thực hiện thanh toán trực tuyến để hoàn tất quá trình mua sắm. Sau đó, tôi bấm nút “Thanh toán” để tiếp tục.
+Ở bước này, tôi sẽ được lựa chọn phương thức thanh toán. Hệ thống hỗ trợ ba cách khác nhau:
+-         Thanh toán khi nhận hàng (COD) – tôi chỉ cần xác nhận đơn hàng và thanh toán trực tiếp khi nhận hàng.
+-         Thanh toán bằng MoMo – hệ thống hiển thị mã QR để tôi quét bằng ứng dụng MoMo.
+-         Thanh toán bằng VNPay – hệ thống hiển thị form để tôi nhập thông tin thẻ ATM hoặc thẻ tín dụng.
+Sau khi tôi chọn phương thức phù hợp và bấm “Xác nhận thanh toán”, hệ thống sẽ tiến hành kiểm tra tính hợp lệ của đơn hàng.
+Access Control
+
+Khách hàng:
+Là một Người mua, tôi muốn đăng ký tài khoản bằng email và mật khẩu, để tôi có thể tạo tài khoản mới.
+Là một Người mua, tôi muốn đăng nhập bằng email và mật khẩu, để tôi có thể truy cập vào trang chủ cửa hàng và mua sắm.
+Tôi muốn chỉnh sửa thông tin cá nhân (ví dụ: họ tên, số điện thoại, địa chỉ), để cập nhật thông tin mới nhất của tôi.
+Tôi muốn đổi mật khẩu cũ thành mật khẩu mới.
+Là một Người mua, tôi muốn đăng xuất khỏi hệ thống, để bảo mật thông tin tài khoản sau khi sử dụng.
+
+Quản trị viên:
+Là một Quản trị viên, tôi muốn đăng nhập bằng email và mật khẩu để tôi có thể truy cập vào bảng điều khiển quản trị (Admin Dashboard).
+Là một Quản trị viên, tôi muốn đăng xuất khỏi hệ thống quản trị
+Là một quản trị viên tôi có thể quản lý tài khoản người dùng:
+Tôi muốn phân vai trò cho người dùng (Người mua hoặc Quản trị viên hoặc nhân viên), để đảm bảo quyền truy cập được cấp đúng theo chức năng.
+Tôi muốn xem danh sách tài khoản người dùng.
+Tôi có thể khóa hoặc mở khóa tài khoản người dùng, để xử lý các trường hợp vi phạm hoặc kích hoạt lại tài khoản.
+Tôi có thể chỉnh sửa thông tin tài khoản của người dùng (ví dụ cập nhật thông tin khi cần).
+
+6. ERD Diagram
+ <img width="714" height="596" alt="Screenshot 2025-12-15 080654" src="https://github.com/user-attachments/assets/261fd520-1f2b-40fa-8679-a3ac22c655c4" />
+
+Hệ thống cơ sở dữ liệu được thiết kế chặt chẽ xoay quanh thực thể trung tâm là User, nơi lưu trữ thông tin định danh và được phân quyền thông qua Role dưới sự quản lý của Admin. Dữ liệu hàng hóa được tổ chức khoa học trong thực thể Product, phân loại chi tiết qua mối quan hệ với Category và Brand để tối ưu hóa việc tìm kiếm. Quy trình mua sắm bắt đầu khi người dùng thêm sản phẩm vào Cart (chứa các CartItem lưu trữ tạm thời) và hoàn tất khi chốt đơn hàng sang thực thể Order (đi kèm OrderItem để lưu trữ lịch sử mua hàng cố định). Cuối cùng, quy trình được khép kín bằng thực thể Payment có liên kết 1-1 với đơn hàng, chịu trách nhiệm ghi nhận trạng thái giao dịch và hình thức thanh toán cụ thể qua PaymentMethod, đảm bảo tính toàn vẹn cho toàn bộ luồng nghiệp vụ bán hàng.
