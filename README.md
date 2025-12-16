@@ -134,3 +134,18 @@ Tôi có thể chỉnh sửa thông tin tài khoản của người dùng (ví d
  <img width="714" height="596" alt="Screenshot 2025-12-15 080654" src="https://github.com/user-attachments/assets/261fd520-1f2b-40fa-8679-a3ac22c655c4" />
 
 Hệ thống cơ sở dữ liệu được thiết kế chặt chẽ xoay quanh thực thể trung tâm là User, nơi lưu trữ thông tin định danh và được phân quyền thông qua Role dưới sự quản lý của Admin. Dữ liệu hàng hóa được tổ chức khoa học trong thực thể Product, phân loại chi tiết qua mối quan hệ với Category và Brand để tối ưu hóa việc tìm kiếm. Quy trình mua sắm bắt đầu khi người dùng thêm sản phẩm vào Cart (chứa các CartItem lưu trữ tạm thời) và hoàn tất khi chốt đơn hàng sang thực thể Order (đi kèm OrderItem để lưu trữ lịch sử mua hàng cố định). Cuối cùng, quy trình được khép kín bằng thực thể Payment có liên kết 1-1 với đơn hàng, chịu trách nhiệm ghi nhận trạng thái giao dịch và hình thức thanh toán cụ thể qua PaymentMethod, đảm bảo tính toàn vẹn cho toàn bộ luồng nghiệp vụ bán hàng.
+
+7. Sơ đồ khối tổng quan
+<img width="668" height="237" alt="Screenshot 2025-12-16 at 10 08 29" src="https://github.com/user-attachments/assets/c5277a40-a475-4d59-9ba5-125709d5a90e" />
+
+Hình trên mô tả sơ đồ khối tổng quan của hệ thống web bán hàng, gồm bốn thành phần chính: Client, Frontend, Backend và Database. Người dùng (Client) gửi yêu cầu đến hệ thống thông qua Load Balancer để phân phối tải giữa các máy chủ. 
+Frontend chịu trách nhiệm hiển thị giao diện người dùng (UI) bằng PHP, JavaScript và CSS, cho phép người dùng thao tác như xem sản phẩm, tìm kiếm, hoặc thêm vào giỏ hàng. 
+Backend xử lý các nghiệp vụ chính gồm ba mô-đun: Product (hiển thị và quản lý sản phẩm), Cart (xử lý giỏ hàng), và Order (xử lý đơn hàng theo kiến trúc rõ ràng). Mỗi mô-đun gồm phần giao diện, logic nghiệp vụ và truy cập dữ liệu thông qua PHP. 
+Toàn bộ dữ liệu về sản phẩm và đơn hàng được lưu trữ trong Cơ sở dữ liệu MySQL. Hệ thống hoạt động theo luồng: Client → Load Balancer → Frontend → Backend → Database, đảm bảo hiệu năng cao, tách biệt rõ ràng giữa các tầng và dễ mở rộng.
+
+8. Sơ đồ triển khai CI/CD (Deployment View)
+<img width="623" height="320" alt="Screenshot 2025-12-16 at 10 07 50" src="https://github.com/user-attachments/assets/62c53cf5-b985-4819-93e1-3adcd8507336" />
+
+Hình sơ đồ triển khai CI/CD Deployment View trên mô tả quy trình DevOps triển khai ứng dụng Node.js gồm ba giai đoạn chính: Development, Build và Shift. Ở giai đoạn Development, lập trình viên sử dụng VS Code để viết mã Node.js và tạo Dockerfile, sau đó đẩy toàn bộ mã nguồn lên GitHub để lưu trữ và quản lý phiên bản. 
+Tiếp theo, trong giai đoạn Build, GitHub Actions tự động kích hoạt quy trình CI/CD, dùng Dockerfile để build Docker image chứa ứng dụng và các cấu hình cần thiết. 
+Cuối cùng, ở giai đoạn Shift, image này được triển khai lên Kubernetes, nơi ứng dụng được vận hành trong các container, hỗ trợ mở rộng linh hoạt, tự động hóa và đảm bảo tính ổn định cao. Quy trình này giúp kết nối chặt chẽ giữa phát triển và vận hành, giảm lỗi thủ công và tăng tốc độ triển khai phần mềm.
