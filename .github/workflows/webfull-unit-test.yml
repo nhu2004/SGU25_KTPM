@@ -2,7 +2,9 @@ name: WebFull - Unit Tests
 
 on:
   push:
+    branches: [ "main", "master", "ci-webfull" ]
   pull_request:
+    branches: [ "main", "master", "ci-webfull" ]
 
 jobs:
   test-webfull:
