@@ -149,3 +149,28 @@ Toàn bộ dữ liệu về sản phẩm và đơn hàng được lưu trữ tro
 Hình sơ đồ triển khai CI/CD Deployment View trên mô tả quy trình DevOps triển khai ứng dụng Node.js gồm ba giai đoạn chính: Development, Build và Shift. Ở giai đoạn Development, lập trình viên sử dụng VS Code để viết mã Node.js và tạo Dockerfile, sau đó đẩy toàn bộ mã nguồn lên GitHub để lưu trữ và quản lý phiên bản. 
 Tiếp theo, trong giai đoạn Build, GitHub Actions tự động kích hoạt quy trình CI/CD, dùng Dockerfile để build Docker image chứa ứng dụng và các cấu hình cần thiết. 
 Cuối cùng, ở giai đoạn Shift, image này được triển khai lên Kubernetes, nơi ứng dụng được vận hành trong các container, hỗ trợ mở rộng linh hoạt, tự động hóa và đảm bảo tính ổn định cao. Quy trình này giúp kết nối chặt chẽ giữa phát triển và vận hành, giảm lỗi thủ công và tăng tốc độ triển khai phần mềm.
+
+9. C4 Model
+- C4 Model – Level 1 (System Context Diagram)
+<img width="404" height="530" alt="Screenshot 2025-12-17 at 08 30 16" src="https://github.com/user-attachments/assets/607588cd-377d-4b06-9ab7-3e566193dce2" />
+
+Sơ đồ trên mô tả ngữ cảnh tổng thể của hệ thống website bán nước hoa Perfume Shop System. Hệ thống được xây dựng bằng HTML, CSS, JavaScript và PHP trên nền XAMPP, cho phép hai tác nhân chính là khách hàng (Customer) và quản trị viên (Admin) tương tác thông qua giao thức HTTP/HTTPS. 
+Khách hàng có thể duyệt sản phẩm, thêm vào giỏ hàng và thực hiện thanh toán, trong khi quản trị viên có quyền quản lý sản phẩm và đơn hàng. Ngoài ra, hệ thống còn tích hợp với các cổng thanh toán bên ngoài như MoMo, VNPay và COD thông qua API để xử lý giao dịch, đảm bảo quá trình mua hàng và thanh toán diễn ra tự động và an toàn.
+
+- C4 Model – Level 2 (Container Diagram)
+<img width="648" height="392" alt="Screenshot 2025-12-17 at 08 32 41" src="https://github.com/user-attachments/assets/c9a5b941-6c35-4a0a-9d3a-435e936b1e5a" />
+
+Sơ đồ mô tả kiến trúc tổng thể của hệ thống Perfume Shop System, gồm hai người dùng chính là Customer và Admin. Khách hàng truy cập website để xem sản phẩm, thêm vào giỏ hàng và thanh toán, trong khi quản trị viên sử dụng giao diện để quản lý sản phẩm và đơn hàng. Hệ thống được xây dựng bằng PHP, HTML, CSS, JavaScript và chạy trên Apache/XAMPP.
+Dữ liệu về sản phẩm, người dùng và đơn hàng được lưu trữ trong cơ sở dữ liệu MySQL/SQL Server. Các hoạt động nội bộ như đồng bộ giữa giỏ hàng và thanh toán được xử lý thông qua Events Bus. Cuối cùng, hệ thống kết nối với cổng thanh toán bên ngoài (như MoMo, VNPay, COD) bằng API để thực hiện giao dịch thanh toán.
+
+- C4 Model – Level 3 (Component Diagram)
+
+Sơ đồ C4 Model – Level 3 mô tả kiến trúc chi tiết của hệ thống bán nước hoa GUHA theo mô hình phân tầng. Người dùng (khách hàng và quản trị viên) truy cập website qua giao thức HTTPS và thao tác trên tầng frontend để xem, lọc sản phẩm, quản lý giỏ hàng, đăng nhập/đăng ký và gửi yêu cầu đến hệ thống. Dữ liệu được trao đổi giữa frontend và backend dưới dạng JSON thông qua các API.
+Tại tầng ứng dụng (Web GUHA – PHP Backend), hệ thống được chia thành các component rõ ràng theo chức năng: User Access xử lý xác thực và phân quyền; Product Catalog quản lý danh sách, chi tiết và tìm kiếm sản phẩm; Shopping Cart quản lý giỏ hàng và tổng tiền; Administration phục vụ quản trị viên quản lý sản phẩm, đơn hàng và người dùng; Payment xử lý thanh toán và cập nhật trạng thái đơn hàng. Các component này thực hiện đọc/ghi dữ liệu với cơ sở dữ liệu MySQL nhằm đảm bảo tính nhất quán và toàn vẹn dữ liệu.
+Đối với thanh toán, Payment tích hợp các cổng thanh toán bên ngoài như MoMo, VNPay hoặc COD. Luồng xử lý diễn ra từ frontend gọi API thanh toán, backend gửi yêu cầu đến cổng thanh toán, nhận kết quả phản hồi và cập nhật trạng thái đơn hàng trong cơ sở dữ liệu. Cách tổ chức kiến trúc theo C4 Level 3 giúp hệ thống rõ ràng về trách nhiệm, dễ mở rộng, dễ bảo trì và sẵn sàng tích hợp thêm các client khác trong tương lai.
+
+- C4 Model – Level 4 (Code/ Class Diagram)
+<img width="664" height="627" alt="Screenshot 2025-12-17 at 08 35 12" src="https://github.com/user-attachments/assets/0745e1bf-bb8e-40df-af86-0c468ba2d74f" />
+
+Hình trên mô tả sơ đồ lớp tổng quan của hệ thống web bán hàng, thể hiện mối quan hệ giữa các thực thể chính gồm User, Cart, CartItem, Order, Payment, Product, Price và Capacity. 
+Người dùng (User) có thể tạo và sở hữu một hoặc nhiều giỏ hàng (Cart), mỗi giỏ chứa nhiều mục hàng (CartItem) liên kết đến các sản phẩm (Product). Khi người dùng thực hiện thanh toán, Cart được chuyển đổi thành Order, trong đó lưu thông tin đơn hàng, phương thức và trạng thái thanh toán. Lớp Payment xử lý giao dịch và xác nhận thanh toán cho đơn hàng. Product lưu thông tin chi tiết về sản phẩm, giá (Price) và dung tích (Capacity), đồng thời cho phép quản trị viên thêm, sửa, xóa sản phẩm. 
