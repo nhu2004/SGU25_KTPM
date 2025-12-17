@@ -26,3 +26,12 @@ Phase3/vendor/
 
 # sql
 *.sql
+
+# PHPUnit / PHP cache
+.phpunit.result.cache
+phpunit.result.cache
+webfull/.phpunit.result.cache
+webfull/phpunit.result.cache
+
+
+
