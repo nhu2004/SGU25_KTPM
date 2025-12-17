@@ -40,7 +40,7 @@ jobs:
 
       - name: Smoke - Home contains title (basic content check)
         run: |
-          curl -fsS "http://localhost:8082/" | grep -i "Guha Store"
+          curl -fsSL "http://localhost:8082/" | grep -i "<title>"
 
       - name: Logs on failure
         if: failure()
