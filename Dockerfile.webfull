@@ -12,6 +12,13 @@ RUN apt-get update && apt-get install -y \
  && docker-php-ext-enable gd mysqli zip \
  && rm -rf /var/lib/apt/lists/*
 
+# CÀI XDEBUG 
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# BẬT MODE COVERAGE (Xdebug v3)
+RUN echo "xdebug.mode=coverage" > /usr/local/etc/php/conf.d/docker-xdebug.ini
+
 RUN curl -sS https://getcomposer.org/installer | php -- \
   --install-dir=/usr/local/bin --filename=composer
 
